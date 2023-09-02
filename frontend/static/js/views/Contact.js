@@ -8,9 +8,23 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
-            <div class="container">
-            <h1>Contact</h1>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed odit doloribus molestias obcaecati? Tenetur corporis fugiat, deleniti dolor iusto pariatur ducimus alias sapiente facere quae nemo in doloribus, quasi rerum!</p>
+            <div class="container col-xxl-6 px-4 py-5">
+            <h1 class="text-center">Contactez-nous</h1>
+            <form class="d-flex flex-column gap-4">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" id="nom" placeholder="Votre nom">
+            </div>
+            <div class="form-group">
+                <label for="email">Courriel</label>
+                <input type="email" class="form-control" id="email" placeholder="nom@exemple.com">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" rows="6"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary disabled">Envoyer</button>
+            </form>
             </div>
         `
     }

@@ -55,7 +55,9 @@ const router = async () => {
 
 
 // permet le retour dans l'historique
-window.addEventListener("popstate", router);
+window.addEventListener("popstate", () => {
+    router();
+});
 
 
 //5
@@ -63,33 +65,31 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.addEventListener("click", e => {
         if (e.target.matches("[data-link]")) {
             e.preventDefault();
-            navigateTo(e.target.href)
+            navigateTo(e.target.href);
+            setActive();
         }
         else if (e.target.parentElement.matches("[data-link]")) {
             e.preventDefault();
-            navigateTo(e.target.parentElement.href)
+            navigateTo(e.target.parentElement.href);
+            setActive();
         }
     })
     router();
+    setActive();
 });
 
 
-
-
-
-
-
 //-----------------------------
-// Ajout classe active et aria-current attribut selon naviagation dans le menu
-const navItems = document.querySelectorAll(".nav-link");
-function setActive(e) {
+// Ajout classe active et aria-current attribut selon navigation
+function setActive() {
+    const navItems = document.querySelectorAll(".nav-link");
     navItems.forEach(item => {
         item.classList.remove("active");
         item.removeAttribute("aria-current");
-        e.target.classList.add("active");
-        e.target.setAttribute("aria-current", "page");
+        console.log(item.href, location.href);
+        if (item.href === location.href) {
+            item.classList.add("active");
+            item.setAttribute("aria-current", "page");
+        }
     })
 }
-navItems.forEach(listItem => {
-    listItem.addEventListener("click", setActive)
-})

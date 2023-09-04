@@ -53,4 +53,5 @@ npm start
 
 ## 🌐 Démo vidéo
 
-![Demo video](./demo.mov)
+https://github.com/Michijoe/s4_SPA_REST_API_TMDB/assets/119381526/823e6b3e-c9c0-4cc8-9f89-47073e464de2
+

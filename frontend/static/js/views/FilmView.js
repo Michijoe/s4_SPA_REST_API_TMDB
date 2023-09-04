@@ -1,13 +1,19 @@
 import AbstractView from "./AbstractView.js";
 
+/**
+ * Vue qui affiche les détails d'un film en prenant en compte l'id du film envoyé en paramètre
+ */
 export default class extends AbstractView {
     constructor(params) {
         super(params);
-        this.setTitle('Film view');
+        this.setTitle('Détails du film');
     }
 
+    /**
+     * Construit la vue à partir des données récupérées dans l'API pour un film
+     * @returns {Promise<string>} html de la vue
+     */
     async getHtml() {
-
         const nu = Number(this.params.id);
         async function getData() {
             const url = `https://api.themoviedb.org/3/movie/${nu}?language=fr-FR`;
@@ -21,11 +27,9 @@ export default class extends AbstractView {
             const response = await fetch(url, options);
             return response.json();
         }
+        const film = await getData().catch(error => console.log(error));
 
-        const film = await getData();
-
-
-
+        // construction du html
         let html = `
         <div class="container col-xxl-8 px-4 py-5 d-flex gap-4 flex-column flex-sm-row">
         <div class="col-4 justify-content-center">
@@ -40,6 +44,7 @@ export default class extends AbstractView {
             <div class="mb-4">
             `;
 
+        // boucle sur les genres du film
         film.genres.forEach(genre => {
             html += `<span class="btn btn-sm btn-outline-primary me-2 disabled">${genre.name}</span>`;
         });
@@ -57,6 +62,5 @@ export default class extends AbstractView {
             `;
 
         return html;
-
     }
 }

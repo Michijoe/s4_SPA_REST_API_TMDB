@@ -1,7 +1,9 @@
+/**
+ * Classe parent de toutes les vues
+ */
 export default class {
     constructor(params) {
         this.params = params;
-        // console.log(this.params);
     }
     setTitle(title) {
         document.title = title;

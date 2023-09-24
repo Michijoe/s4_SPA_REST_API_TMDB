@@ -15,19 +15,26 @@ export default class extends AbstractView {
      */
     async getHtml() {
         const nu = Number(this.params.id);
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZTdhY2NlNDRlNjkzOGM0NzFiNmFmOGMxYjQ0NDliNCIsInN1YiI6IjY0ZTRmODExYzNjODkxMDBhZWQ3ODBlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.71womqwvA4SJ1KVF64WabIdgMUOcR6_Jkq68_rEb43Y'
+            }
+        };
         async function getData() {
             const url = `https://api.themoviedb.org/3/movie/${nu}?language=fr-FR`;
-            const options = {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZTdhY2NlNDRlNjkzOGM0NzFiNmFmOGMxYjQ0NDliNCIsInN1YiI6IjY0ZTRmODExYzNjODkxMDBhZWQ3ODBlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.71womqwvA4SJ1KVF64WabIdgMUOcR6_Jkq68_rEb43Y'
-                }
-            };
+            const response = await fetch(url, options);
+            return response.json();
+        }
+        async function getVideo() {
+            const url = `https://api.themoviedb.org/3/movie/${nu}/videos?language=en-US`;
             const response = await fetch(url, options);
             return response.json();
         }
         const film = await getData().catch(error => console.log(error));
+        const trailer = await getVideo().catch(error => console.log(error));
+        const keyYoutube = trailer.results.find(item => item.type === 'Teaser' && item.site === 'YouTube').key;
 
         // construction du html
         let html = `
@@ -56,7 +63,10 @@ export default class extends AbstractView {
                 <h4>Synopsis</h4>
                 <p>${film.overview}</p>
             </div>
-            <div><strong>Vote des spectateurs</strong><span class="badge text-bg-warning rounded-pill ms-2"> ${Math.round(film.vote_average * 10)}%</span></div>
+            <div class="mb-4"><strong>Vote des spectateurs</strong><span class="badge text-bg-warning rounded-pill ms-2"> ${Math.round(film.vote_average * 10)}%</span></div>
+            <div class="embed-responsive">
+            <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/${keyYoutube}" allowfullscreen></iframe>
+            </div>
             </div >
             </div >
             `;

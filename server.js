@@ -6,16 +6,12 @@ const { PORT } = require("./config.js");
 const { API_KEY } = require("./config.js");
 const fetch = require('node-fetch');
 
-/**
- * IIFE (Immediately Invoked Function Expression) qui créé le fichier films.json au démarrage du server
- */
 (async () => {
     const url = 'https://api.themoviedb.org/3/movie/now_playing?language=fr-FR&page=1&region=CA';
     const options = {
         method: 'GET',
         headers: {
             accept: 'application/json',
-            // API_KEY est une variable de .env
             Authorization: `Bearer ${API_KEY}`
         }
     };

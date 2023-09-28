@@ -34,7 +34,7 @@ export default class extends AbstractView {
         }
         const film = await getData().catch(error => console.log(error));
         const trailer = await getVideo().catch(error => console.log(error));
-        const keyYoutube = trailer.results.find(item => item.type === 'Teaser' && item.site === 'YouTube').key;
+        const keyYoutube = trailer.results && trailer.results.find(item => item.type === 'Trailer' && item.site === 'YouTube');
 
         // construction du html
         let html = `
@@ -65,7 +65,17 @@ export default class extends AbstractView {
             </div>
             <div class="mb-4"><strong>Vote des spectateurs</strong><span class="badge text-bg-warning rounded-pill ms-2"> ${Math.round(film.vote_average * 10)}%</span></div>
             <div class="embed-responsive">
-            <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/${keyYoutube}" allowfullscreen></iframe>
+            `;
+        // si le trailer existe, on l'affiche
+        if (keyYoutube) {
+            html +=
+                `
+            <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/${keyYoutube.key}" allowfullscreen></iframe>
+            `;
+        }
+
+        html +=
+            `
             </div>
             </div >
             </div >

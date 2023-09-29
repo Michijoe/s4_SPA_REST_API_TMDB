@@ -38,11 +38,11 @@ export default class extends AbstractView {
 
         // construction du html
         let html = `
-        <div class="container col-xxl-8 px-4 py-5 d-flex gap-4 flex-column flex-sm-row">
-        <div class="col-4 justify-content-center">
+        <div class="container col-xxl-8 px-4 py-5 d-flex gap-4 flex-column flex-lg-row">
+        <div class="col-lg-4 justify-content-center">
             <img class="rounded img-fluid" alt="poster film${film.title}" src="https://image.tmdb.org/t/p/w500${film.poster_path}">
         </div>
-        <div class="col-8">
+        <div class="col-xxl-8">
             <h1 class="display-3">${film.title}</h1>
             <div class="mb-2">
             <span>Sortie le ${film.release_date} &#8226 </span>
@@ -70,7 +70,7 @@ export default class extends AbstractView {
         if (keyYoutube) {
             html +=
                 `
-            <iframe class="embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/${keyYoutube.key}" allowfullscreen></iframe>
+            <iframe class="embed-responsive-item" width="100%" height="315" src="https://www.youtube.com/embed/${keyYoutube.key}" allowfullscreen></iframe>
             `;
         }
 
